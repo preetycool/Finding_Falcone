@@ -1,9 +1,16 @@
-const Dropdown = ({ value, handleChange, options, id }) => (
-  <select value={value} onChange={handleChange} name={`dropdown-${id}`}>
-    <option value=''>Select...</option>
+import "./Dropdown.styles.scss";
+
+const Dropdown = ({ value, handleChange, options = [], id }) => (
+  <select
+    className="dropdown"
+    value={value}
+    onChange={handleChange}
+    name={`dropdown-${id}`}
+  >
+    <option value="">Select...</option>
     {options.map((option) => (
-      <option key={option.name} value={option.name}>
-        {option.name}
+      <option key={option} value={option}>
+        {option}
       </option>
     ))}
   </select>

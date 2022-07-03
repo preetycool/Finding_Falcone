@@ -27,7 +27,8 @@ export const getPlanets = async () => {
 };
 
 export const getVehicles = async () => {
-  return await fetchUrl(getVehiclesUrl);
+  const vehicles = await fetchUrl(getVehiclesUrl);
+  return vehicles.filter((vehicle) => !vehicle.id);
 };
 
 export const postDestinationData = async (data) => {

@@ -1,10 +1,11 @@
 import Lottie from "lottie-react";
 import rocketAnimation from "../../animations/rocketAnimation.json";
+import "./Loader.styles.scss";
 
 const Loader = ({ headingText = "" }) => (
-  <div className='loader'>
+  <div className="loader">
     <Lottie animationData={rocketAnimation} loop={true} />
-    {headingText && <h1 className='loader__text'>{headingText}</h1>}
+    {headingText && <h1 className="loader__heading">{headingText}</h1>}
   </div>
 );
 

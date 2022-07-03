@@ -1,0 +1,38 @@
+.destination-page {
+  max-width: 900px;
+  margin: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+
+  &__heading {
+    font-family: "Orbitron", monospace;
+    font-size: 1.5rem;
+  }
+
+  &__time {
+    font-family: "VT323", monospace;
+    font-size: 2rem;
+    margin: 2rem 0;
+  }
+
+  &__tiles {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__button {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: white;
+
+    &:hover {
+      background-color: black;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}

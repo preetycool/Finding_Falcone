@@ -1,0 +1,13 @@
+.radio-button-group {
+  display: flex;
+  flex-direction: column;
+
+  input[type="radio"] {
+    margin-right: 0.5rem;
+    margin-top: 0;
+  }
+
+  label {
+    margin: 0.5rem 0;
+  }
+}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getPlanets, getVehicles, postDestinationData } from "../../api/api";
 import { PLANET_SELECTED, VEHICLE_SELECTED } from "../../common/constants";
 import Loader from "../../components/Loader/Loader";
+import "./DestinationSelectionPage.styles.scss";
 
 const DestinationSelectionPage = () => {
   const [planets, setPlanets] = useState([]);
@@ -29,8 +30,6 @@ const DestinationSelectionPage = () => {
     getData();
   }, []);
 
-  useEffect(() => {}, [vehicles]);
-
   if (planets.length === 0 || vehicles.length === 0) {
     return <Loader headingText={"Getting ready to blast off"} />;
   }
@@ -48,33 +47,42 @@ const DestinationSelectionPage = () => {
     const destinationSelectionCopy = [...destinationSelections];
     destinationSelectionCopy[id - 1][VEHICLE_SELECTED] = value;
     setDestinationSelections(destinationSelectionCopy);
-
-    const { planetSelected, vehicleSelected } =
-      destinationSelectionCopy[id - 1];
-
-    const { distance } = planets.find(
-      (planet) => planet.name === planetSelected
-    );
-    const { speed } = vehicles.find(
-      (vehicle) => vehicle.name === vehicleSelected
-    );
-
-    const timeTakenToTravelToPlanet = Number(distance) / Number(speed);
-    setTimeTaken((prevState) => prevState + timeTakenToTravelToPlanet);
   };
+
+  const getTotalTimeTaken = () =>
+    destinationSelections.reduce((totalTime, currentDestination) => {
+      if (
+        currentDestination.planetSelected &&
+        currentDestination.vehicleSelected
+      ) {
+        const { distance } = planets.find(
+          (planet) => planet.name === currentDestination.planetSelected
+        );
+
+        const { speed } = vehicles.find(
+          (vehicle) => vehicle.name === currentDestination.vehicleSelected
+        );
+
+        return totalTime + Number(distance) / Number(speed);
+      }
+
+      return totalTime + 0;
+    }, 0);
 
   const getMatchingValueFromDestinations = (id, itemToFind) =>
     destinationSelections[id - 1][itemToFind] || "";
 
   const getFilteredPlanets = (id) => {
-    return planets.filter(
-      (planet) =>
-        !destinationSelections.find(
-          (destination) =>
-            destination[PLANET_SELECTED] === planet.name &&
-            destination.destinationNumber !== id
-        )
-    );
+    return planets
+      .filter(
+        (planet) =>
+          !destinationSelections.find(
+            (destination) =>
+              destination[PLANET_SELECTED] === planet.name &&
+              destination.destinationNumber !== id
+          )
+      )
+      .map((p) => p.name);
   };
 
   const getFilteredVehicles = () =>
@@ -98,8 +106,6 @@ const DestinationSelectionPage = () => {
     });
 
   const handleSubmit = () => {
-    // need error handling here for state
-    console.log("hi");
     const mappedDestinationData = destinationSelections.reduce(
       (accumulation, currentDestination) => {
         accumulation.planets.push(currentDestination.planetSelected);
@@ -110,51 +116,61 @@ const DestinationSelectionPage = () => {
       { planets: [], vehicles: [] }
     );
 
-    console.log(mappedDestinationData);
     postDestinationData(mappedDestinationData);
   };
 
   return (
-    <div className='destination-selection'>
-      <h2 className='destination-time-taken'>Time taken: {timeTaken}</h2>
-      <DestinationTile
-        id={1}
-        planets={getFilteredPlanets(1)}
-        vehicles={getFilteredVehicles()}
-        onDropdownChange={onDropdownChange(1)}
-        planetValue={getMatchingValueFromDestinations(1, PLANET_SELECTED)}
-        vehicleValue={getMatchingValueFromDestinations(1, VEHICLE_SELECTED)}
-        onCheckboxSelect={onRadioButtonChange(1)}
-      />
-      <DestinationTile
-        id={2}
-        planets={getFilteredPlanets(2)}
-        vehicles={getFilteredVehicles()}
-        onDropdownChange={onDropdownChange(2)}
-        planetValue={getMatchingValueFromDestinations(2, PLANET_SELECTED)}
-        vehicleValue={getMatchingValueFromDestinations(2, VEHICLE_SELECTED)}
-        onCheckboxSelect={onRadioButtonChange(2)}
-      />
-      <DestinationTile
-        id={3}
-        planets={getFilteredPlanets(3)}
-        vehicles={getFilteredVehicles()}
-        onDropdownChange={onDropdownChange(3)}
-        planetValue={getMatchingValueFromDestinations(3, PLANET_SELECTED)}
-        vehicleValue={getMatchingValueFromDestinations(3, VEHICLE_SELECTED)}
-        onCheckboxSelect={onRadioButtonChange(3)}
-      />
-      <DestinationTile
-        id={4}
-        planets={getFilteredPlanets(4)}
-        vehicles={getFilteredVehicles()}
-        onDropdownChange={onDropdownChange(4)}
-        planetValue={getMatchingValueFromDestinations(4, PLANET_SELECTED)}
-        vehicleValue={getMatchingValueFromDestinations(4, VEHICLE_SELECTED)}
-        onCheckboxSelect={onRadioButtonChange(4)}
-      />
-      <button onClick={handleSubmit}>Submit Data</button>
-    </div>
+    <section className="destination-page">
+      <h1 className="destination-page__heading">
+        Select the planets you want to search
+      </h1>
+      <h2 className="destination-page__time">
+        Total time taken: {getTotalTimeTaken()}
+      </h2>
+      <div className="destination-page__tiles">
+        <DestinationTile
+          id={1}
+          planets={getFilteredPlanets(1)}
+          vehicles={getFilteredVehicles()}
+          onDropdownChange={onDropdownChange(1)}
+          planetValue={getMatchingValueFromDestinations(1, PLANET_SELECTED)}
+          vehicleValue={getMatchingValueFromDestinations(1, VEHICLE_SELECTED)}
+          onCheckboxSelect={onRadioButtonChange(1)}
+        />
+        <DestinationTile
+          id={2}
+          planets={getFilteredPlanets(2)}
+          vehicles={getFilteredVehicles()}
+          onDropdownChange={onDropdownChange(2)}
+          planetValue={getMatchingValueFromDestinations(2, PLANET_SELECTED)}
+          vehicleValue={getMatchingValueFromDestinations(2, VEHICLE_SELECTED)}
+          onCheckboxSelect={onRadioButtonChange(2)}
+        />
+        <DestinationTile
+          id={3}
+          planets={getFilteredPlanets(3)}
+          vehicles={getFilteredVehicles()}
+          onDropdownChange={onDropdownChange(3)}
+          planetValue={getMatchingValueFromDestinations(3, PLANET_SELECTED)}
+          vehicleValue={getMatchingValueFromDestinations(3, VEHICLE_SELECTED)}
+          onCheckboxSelect={onRadioButtonChange(3)}
+        />
+        <DestinationTile
+          id={4}
+          planets={getFilteredPlanets(4)}
+          vehicles={getFilteredVehicles()}
+          onDropdownChange={onDropdownChange(4)}
+          planetValue={getMatchingValueFromDestinations(4, PLANET_SELECTED)}
+          vehicleValue={getMatchingValueFromDestinations(4, VEHICLE_SELECTED)}
+          onCheckboxSelect={onRadioButtonChange(4)}
+        />
+      </div>
+      <div className="destination-page__submit">
+        <button className="destination-page__button" onClick={handleSubmit}>
+          Submit Data
+        </button>
+      </div>
+    </section>
   );
 };
 

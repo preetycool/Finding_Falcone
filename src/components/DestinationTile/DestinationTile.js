@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Dropdown from "../Dropdown/Dropdown";
 import RadioButtonGroup from "../RadioButtonGroup/RadioButtonGroup";
+import "./DestinationTile.styles.scss";
 
 const DestinationTile = ({
   planets,
@@ -32,8 +33,8 @@ const DestinationTile = ({
   };
 
   return (
-    <section className='planet-vehicle-tile'>
-      <h2>{`Destination ${id}`}</h2>
+    <section className="destination-tile">
+      <h2 className="destination-tile__heading">{`Destination ${id}`}</h2>
       {!!planets.length && (
         <Dropdown
           id={id}
