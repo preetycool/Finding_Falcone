@@ -13,9 +13,7 @@ const ResultsPage = () => {
   const { status = "", planet_name = "" } = result;
 
   useEffect(() => {
-    console.log("here");
     if (!status || !planet_name) {
-      console.log("here2");
       navigate("/");
     }
   }, []);
