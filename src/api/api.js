@@ -1,3 +1,4 @@
+import { ERROR_CODE } from "../common/constants";
 import {
   getPlanetUrl,
   getVehiclesUrl,
@@ -18,7 +19,7 @@ const fetchUrl = async (url, method = "GET", data = {}, headers = {}) => {
     });
     return await response.json();
   } catch (e) {
-    console.log(e);
+    return { error: ERROR_CODE };
   }
 };
 
@@ -32,12 +33,10 @@ export const getVehicles = async () => {
 };
 
 export const postDestinationData = async (data) => {
-  console.log("here");
   const tokenData = await fetchUrl(postTokenValueUrl, "POST");
   if (!tokenData?.token) {
     return;
   }
   const dataWithToken = { token: tokenData.token, ...data };
-  console.log(dataWithToken);
   return await fetchUrl(postDestinationDataUrl, "POST", dataWithToken);
 };

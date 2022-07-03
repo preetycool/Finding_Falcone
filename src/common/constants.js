@@ -7,3 +7,4 @@ export const VEHICLE_ERROR_MESSAGE = "Please select a vehicle";
 export const PLANET_ERROR_MESSAGE = "Please select a planet to travel to";
 
 export const SUCCESS = "success";
+export const ERROR_CODE = "ERROR_1";

@@ -10,11 +10,14 @@ import {
 import Loader from "../../components/Loader/Loader";
 import "./DestinationSelectionPage.styles.scss";
 import { useNavigate } from "react-router-dom";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 const DestinationSelectionPage = () => {
   const navigate = useNavigate();
   const [planets, setPlanets] = useState([]);
   const [vehicles, setVehicles] = useState([]);
+  const [apiError, setApiError] = useState({ error: false, errorCode: "" });
+  const [isLoading, setIsLoading] = useState(false);
   const [destinationSelections, setDestinationSelections] = useState([
     ...Array.apply(null, Array(4)).map((_, i) => ({
       destinationNumber: i + 1,
@@ -34,14 +37,25 @@ const DestinationSelectionPage = () => {
       const planetData = await getPlanets();
       const vehicleData = await getVehicles();
 
-      setPlanets(planetData);
-      setVehicles(vehicleData);
+      if (planetData?.error || vehicleData?.error) {
+        setApiError({
+          error: true,
+          errorCode: planetData?.error || vehicleData?.error,
+        });
+      } else {
+        setPlanets(planetData);
+        setVehicles(vehicleData);
+      }
     };
 
     getData();
   }, []);
 
-  if (planets.length === 0 || vehicles.length === 0) {
+  if (apiError.error && apiError.errorCode) {
+    return <ErrorPage />;
+  }
+
+  if (isLoading || planets.length === 0 || vehicles.length === 0) {
     return <Loader headingText={"Getting ready to blast off"} />;
   }
 
@@ -166,9 +180,10 @@ const DestinationSelectionPage = () => {
         { planets: [], vehicles: [] }
       );
 
+      setIsLoading(true);
       const result = await postDestinationData(mappedDestinationData);
       if (Object.values(result).length > 0) {
-        navigate("/results", { state: { result, destinationSelections } });
+        navigate("/results", { state: { result } });
       }
     }
   };

@@ -9,27 +9,27 @@ const ResultsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const stateData = location.state;
-
-  console.log(stateData);
+  const result = stateData?.result || {};
+  const { status = "", planet_name = "" } = result;
 
   useEffect(() => {
-    if (!stateData) {
+    console.log("here");
+    if (!status || !planet_name) {
+      console.log("here2");
       navigate("/");
     }
-  }, [navigate, stateData]);
+  }, []);
 
   const handleClick = () => {
     navigate("/");
   };
-
-  const { planet_name, status } = stateData.result;
 
   return (
     <section className='results-page'>
       <h1 className='results-page__heading heading'>
         {status === SUCCESS
           ? "Congratulations Voyager! You found Falcone!"
-          : "Bad luck Voyager! You did not find Falcone"}
+          : "Bad luck Voyager! You did not find Falcone!"}
       </h1>
       <div className='results-page__animation'>
         <Lottie animationData={birdAnimation} loop={true} />
