@@ -152,11 +152,17 @@ p {
 }
 
 .heading {
+  @include for-phone-only {
+    font-size: 1rem;
+  }
   font-family: "Orbitron", monospace;
   font-size: 1.5rem;
 }
 
 .subheading {
-  font-size: 0.75rem;
+  @include for-phone-only {
+    padding: 0.75rem;
+  }
+  font-size: 1rem;
   font-family: monospace;
 }

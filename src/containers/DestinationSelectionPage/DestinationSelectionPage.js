@@ -16,7 +16,10 @@ const DestinationSelectionPage = () => {
   const navigate = useNavigate();
   const [planets, setPlanets] = useState([]);
   const [vehicles, setVehicles] = useState([]);
-  const [apiError, setApiError] = useState({ error: false, errorCode: "" });
+  const [apiError, setApiError] = useState({
+    isErrorPresent: false,
+    errorCode: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [destinationSelections, setDestinationSelections] = useState([
     ...Array.apply(null, Array(4)).map((_, i) => ({
@@ -39,7 +42,7 @@ const DestinationSelectionPage = () => {
 
       if (planetData?.error || vehicleData?.error) {
         setApiError({
-          error: true,
+          isErrorPresent: true,
           errorCode: planetData?.error || vehicleData?.error,
         });
       } else {
@@ -51,7 +54,7 @@ const DestinationSelectionPage = () => {
     getData();
   }, []);
 
-  if (apiError.error && apiError.errorCode) {
+  if (apiError.isErrorPresent && apiError.errorCode) {
     return <ErrorPage />;
   }
 
@@ -144,30 +147,30 @@ const DestinationSelectionPage = () => {
       };
     });
 
-  const checkDestionationErrors = () => {
-    let hasDestionationError = false;
+  const checkDestinationErrors = () => {
+    let hasDestinationError = false;
     const errorMessageCopy = [...errorMessages];
     destinationSelections.forEach((destination) => {
       if (!destination.planetSelected) {
         errorMessageCopy[destination.destinationNumber - 1].errorMessage =
           PLANET_ERROR_MESSAGE;
-        hasDestionationError = true;
+        hasDestinationError = true;
       } else if (!destination.vehicleSelected) {
         errorMessageCopy[destination.destinationNumber - 1].errorMessage =
           VEHICLE_ERROR_MESSAGE;
-        hasDestionationError = true;
+        hasDestinationError = true;
       }
     });
 
-    if (hasDestionationError) {
+    if (hasDestinationError) {
       setErrorMessages(errorMessageCopy);
     }
 
-    return hasDestionationError;
+    return hasDestinationError;
   };
 
   const handleSubmit = async () => {
-    const hasError = checkDestionationErrors();
+    const hasError = checkDestinationErrors();
 
     if (!hasError) {
       const mappedDestinationData = destinationSelections.reduce(
@@ -193,16 +196,18 @@ const DestinationSelectionPage = () => {
       ?.errorMessage;
 
   return (
-    <section className='destination-page'>
-      <h1 className='destination-page__heading'>Search for Master Falcone</h1>
-      <h2 className='destination-page__subheading'>
+    <section className="destination-page">
+      <h1 className="destination-page__heading heading">
+        Search for Master Falcone
+      </h1>
+      <h2 className="destination-page__subheading subheading">
         He's hiding somewhere at one of the planets. Select 4 destinations and
         the vehicle you wish to use to travel to each destination
       </h2>
-      <h2 className='destination-page__time'>
+      <h2 className="destination-page__time">
         Total time taken: {getTotalTimeTaken()}
       </h2>
-      <div className='destination-page__tiles'>
+      <div className="destination-page__tiles">
         <DestinationTile
           id={1}
           planets={getFilteredPlanets(1)}
@@ -244,9 +249,9 @@ const DestinationSelectionPage = () => {
           errorMessage={getErrorMessage(4)}
         />
       </div>
-      <div className='destination-page__submit'>
-        <button className='destination-page__button' onClick={handleSubmit}>
-          Submit Data
+      <div className="destination-page__submit">
+        <button className="destination-page__button" onClick={handleSubmit}>
+          Submit Destinations
         </button>
       </div>
     </section>
