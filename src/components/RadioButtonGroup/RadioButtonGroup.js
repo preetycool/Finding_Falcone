@@ -1,12 +1,12 @@
 import "./RadioButtonGroup.styles.scss";
 
 const RadioButtonGroup = ({ value, options, handleChange, id }) => (
-  <div onChange={handleChange} className="radio-button-group">
+  <div onChange={handleChange} className='radio-button-group'>
     {options.map((option) => (
-      <label key={option.name}>
+      <label data-testid='radio-button-group' key={option.name}>
         <input
           disabled={option.disabled}
-          type="radio"
+          type='radio'
           name={`radio-group-${id}`}
           value={option.name}
           selected={value === option.name}

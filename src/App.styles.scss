@@ -1,3 +1,4 @@
+@import "main.scss";
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -133,4 +134,29 @@ h2,
 h3,
 p {
   font-family: "Orbitron", sans-serif;
+}
+
+.button {
+  width: 150px;
+  height: 40px;
+  border-radius: 0;
+  background-color: white;
+  border: 2px solid black;
+  font-family: "Orbitron", monospace;
+
+  &:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.heading {
+  font-family: "Orbitron", monospace;
+  font-size: 1.5rem;
+}
+
+.subheading {
+  font-size: 0.75rem;
+  font-family: monospace;
 }

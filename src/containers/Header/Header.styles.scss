@@ -1,13 +1,24 @@
+@import "../../main.scss";
+
 .navigation-bar {
+  @include for-phone-only {
+    align-items: flex-start;
+    flex-direction: column;
+  }
   padding: 0.5rem;
   border-bottom: 5px solid black;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
 
+  &__information {
+    display: flex;
+    align-items: center;
+  }
+
   &__heading {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: 0 0 0 1rem;
   }
 
@@ -16,7 +27,43 @@
     width: 48px;
   }
 
-  &__links {
-    margin-left: auto;
+  &__actions {
+    @include for-phone-only {
+      margin-left: 0;
+    }
+
+    display: flex;
+    flex-direction: row;
+    font-family: "Orbitron", monospace;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__action {
+    @include for-phone-only {
+      margin: 0;
+    }
+    &.nav-button,
+    &.link {
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-family: "Orbitron", monospace;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    &.link {
+      @include for-phone-only {
+        padding-right: 0.25rem;
+      }
+    }
+
+    &.link:visited {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    margin: 0 1rem;
   }
 }

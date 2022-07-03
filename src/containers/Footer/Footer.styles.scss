@@ -1,4 +1,10 @@
+@import "../../main.scss";
+
 .footer {
+  @include for-phone-only {
+    padding: 1rem;
+    text-align: center;
+  }
   border-top: 5px solid black;
   display: flex;
   flex-wrap: wrap;
@@ -6,4 +12,5 @@
   align-items: center;
   min-height: 4rem;
   margin-top: auto;
+  font-size: 0.75rem;
 }

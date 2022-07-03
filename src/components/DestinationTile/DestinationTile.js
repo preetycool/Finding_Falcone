@@ -4,22 +4,24 @@ import RadioButtonGroup from "../RadioButtonGroup/RadioButtonGroup";
 import "./DestinationTile.styles.scss";
 
 const DestinationTile = ({
-  planets,
-  vehicles,
+  planets = [],
+  vehicles = [],
   id,
   onDropdownChange,
   planetValue,
   vehicleValue,
-  onCheckboxSelect,
+  onRadioButtonChange,
+  errorMessage,
 }) => {
-  const [isOptionSelected, setIsOptionSelected] = useState(false);
+  const [isOptionSelected, setIsOptionSelected] = useState(
+    !!planetValue || false
+  );
 
   const vehiclesThatCanReachPlanetSelected = vehicles.filter((vehicle) =>
     vehicle.planetsVehicleCanReach.includes(planetValue)
   );
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
+  const handleDropdownChange = (e) => {
     onDropdownChange(e.target.value);
     if (e.target.value) {
       setIsOptionSelected(true);
@@ -28,28 +30,31 @@ const DestinationTile = ({
     }
   };
 
-  const handleCheckboxChange = (e) => {
-    onCheckboxSelect(e.target.value);
+  const handleRadioButtonChange = (e) => {
+    onRadioButtonChange(e.target.value);
   };
 
   return (
-    <section className="destination-tile">
-      <h2 className="destination-tile__heading">{`Destination ${id}`}</h2>
+    <section className='destination-tile'>
+      <h2 className='destination-tile__heading'>{`Destination ${id}`}</h2>
       {!!planets.length && (
         <Dropdown
           id={id}
           value={planetValue}
           options={planets}
-          handleChange={handleChange}
+          handleChange={handleDropdownChange}
         />
       )}
       {isOptionSelected && !!vehiclesThatCanReachPlanetSelected.length && (
         <RadioButtonGroup
           id={id}
           options={vehiclesThatCanReachPlanetSelected}
-          handleChange={handleCheckboxChange}
+          handleChange={handleRadioButtonChange}
           value={vehicleValue}
         />
+      )}
+      {errorMessage && (
+        <p className='destination-tile__error-message'>{errorMessage}</p>
       )}
     </section>
   );

@@ -1,0 +1,38 @@
+@import "../../main.scss";
+
+.results-page {
+  @include for-phone-only {
+    padding: 0 1rem;
+  }
+  &__heading {
+    @include for-phone-only {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    margin: 2rem 0;
+  }
+
+  &__animation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  &__subheading {
+    @include for-phone-only {
+      margin-bottom: 1rem;
+    }
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__button {
+    @include for-phone-only {
+      width: 100%;
+    }
+  }
+
+  text-align: center;
+}

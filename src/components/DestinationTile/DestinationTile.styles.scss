@@ -6,4 +6,10 @@
     font-weight: 400;
     margin: 0 0 0.5rem;
   }
+
+  &__error-message {
+    color: red;
+    font-size: 0.75rem;
+    font-family: monospace;
+  }
 }
