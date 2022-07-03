@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
     <nav className='navigation-bar'>
-      <div className='navigation-bar__information'>
+      <div onClick={handleClick} className='navigation-bar__information'>
         <img
           className='navigation-bar__img'
           src={require("../../images/bird.png")}

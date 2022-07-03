@@ -15,6 +15,10 @@
   &__information {
     display: flex;
     align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__heading {
