@@ -160,9 +160,6 @@ p {
 }
 
 .subheading {
-  @include for-phone-only {
-    padding: 0.75rem;
-  }
   font-size: 1rem;
   font-family: monospace;
 }
