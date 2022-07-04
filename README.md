@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Welcome to the Find Falcone App!
+
+You can access the live version of this app via the url here: https://findfalcone1.herokuapp.com/
+
+Otherwise to run the app locally, please follow the steps below.
+
+1. Open the repository and a terminal at the root of the repository.
+2. Install dependencies by typing npm install in the terminal.
+3. Start the app by typing npm start in the terminal.
+4. To run any tests, type npm test in the terminal.
+
+## Future improvements
+
+1. Better accessibility - adding aria-live checks when error messages appear/focusing on first dropdown which has an error
+2. I did not think to add global statement management (Redux and Context API) since this was not a big application. However, for scalability (if more pages were added that called similar apis), I would use global state management to track error states so that it would be easier to manage displaying the Error Page container.
+3. Higher unit test coverage - due to time constraints, I have added as many unit tests as I could but would always aim for 90%+ or higher unit test coverage (100% is best :D).
+4. Add auto complete for dropdown so users can type a planet
+
+## Credits
+
 ## Available Scripts
 
 In the project directory, you can run:
