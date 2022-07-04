@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DestinationTile from "./DestinationTile";
 
@@ -56,4 +56,28 @@ test("should not show the radio buttons if default Select... is selected", () =>
   userEvent.selectOptions(dropdown, "Select...");
   radioButtonGroup = screen.queryByTestId("radio-button-group");
   expect(radioButtonGroup).toBe(null);
+});
+
+test("should have options available with total numbers if total_no is provided", () => {
+  const onDropdownChangeMock = jest.fn();
+  const onRadioButtonChangeMock = jest.fn();
+
+  render(
+    <DestinationTile
+      vehicles={[
+        { name: "Vehicle1", planetsVehicleCanReach: ["Test1"], total_no: 5 },
+      ]}
+      planets={["Test1", "Test2"]}
+      onDropdownChange={onDropdownChangeMock}
+      onRadioButtonChange={onRadioButtonChangeMock}
+      planetValue='Test1'
+    />
+  );
+
+  const radioButton = screen.getByLabelText("Vehicle1 - 5 remaining");
+  expect(radioButton).toBeInTheDocument();
+
+  fireEvent.click(radioButton);
+  expect(radioButton).toBeChecked(true);
+  expect(screen.getByLabelText("Vehicle1 - 5 remaining")).toBeInTheDocument();
 });
