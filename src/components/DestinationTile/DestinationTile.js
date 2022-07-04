@@ -17,9 +17,15 @@ const DestinationTile = ({
     !!planetValue || false
   );
 
-  const vehiclesThatCanReachPlanetSelected = vehicles.filter((vehicle) =>
-    vehicle.planetsVehicleCanReach.includes(planetValue)
-  );
+  const vehiclesThatCanReachPlanetSelected = vehicles
+    .filter((vehicle) => vehicle.planetsVehicleCanReach.includes(planetValue))
+    .map((vehicle) => ({
+      name: `${vehicle.name} ${
+        vehicle.total_no >= 0 ? ` - ${vehicle.total_no} remaining` : ""
+      }`,
+      value: vehicle.name,
+      disabled: vehicle.disabled,
+    }));
 
   const handleDropdownChange = (e) => {
     onDropdownChange(e.target.value);
