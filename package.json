@@ -1,0 +1,20 @@
+{
+  "name": "frontend-challenge_preetycool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "script": {
+    "start": "cd server && npm install && node server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShippitRecruitment/frontend-challenge_preetycool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShippitRecruitment/frontend-challenge_preetycool/issues"
+  },
+  "homepage": "https://github.com/ShippitRecruitment/frontend-challenge_preetycool#readme"
+}
