@@ -15,10 +15,11 @@ const fetchUrl = async (url, method = "GET", data = {}, headers = {}) => {
         Accept: "application/json",
         ...headers,
       },
-      ...(method === "POST" ? data : {}),
+      ...(method === "POST" ? { body: JSON.stringify(data) } : {}),
     });
     return await response.json();
   } catch (e) {
+    console.log(e);
     return { error: ERROR_CODE };
   }
 };

@@ -185,7 +185,12 @@ const DestinationSelectionPage = () => {
 
       setIsLoading(true);
       const result = await postDestinationData(mappedDestinationData);
-      if (Object.values(result).length > 0) {
+      if (result.error) {
+        setApiError({
+          isErrorPresent: true,
+          errorCode: result.error,
+        });
+      } else if (Object.values(result).length > 0) {
         navigate("/results", { state: { result } });
       }
     }
