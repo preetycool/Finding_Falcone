@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "script": {
+  "scripts": {
     "start": "cd server && npm install && node index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
